@@ -1,0 +1,24 @@
+version: '2'
+services:
+  imager-repo-dev:
+    image: codlr/imager-repo
+    command: node server.js
+    volumes:
+      - ~/image-uploads:/usr/src/app/image
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "80:80"
+  imager-db-dev:
+    image: postgres:9.6
+    volumes:
+      - /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - "POSTGRES_USER=ivan"
+      - "POSTGRES_PASSWORD=codlr"
+      - "POSTGRES_DB=imager"
+  redis-dev:
+    image: redis:3.0.7
+    ports:
+      - "6379:6379"

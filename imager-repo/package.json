@@ -1,0 +1,14 @@
+{
+	"name": "photollenge-repo",
+	"version": "1.0.1",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"express": "~4.14.0",
+		"formidable": "~1.0.17",
+		"quickthumb": "~0.0.12",
+		"fs-extra": "~0.30.0"
+	}
+} 

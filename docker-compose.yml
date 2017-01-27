@@ -1,0 +1,33 @@
+version: '2'
+services:
+  imager-loadbalancer:
+    image: 'dockercloud/haproxy:latest'
+    links:
+      - imager-repo
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 80:80
+  imager-web:
+    image: codlr/imager-core
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "imager-loadbalancer"
+      - "imager-db"
+      - "imager-redis"
+  imager-repo:
+    image: codlr/imager-repo
+    command: node server.js
+    volumes:
+      - ~/image-uploads:/usr/src/app/image
+  imager-db:
+    image: postgres:9.6
+    volumes:
+      - /var/lib/postgresql/data
+    environment:
+      - "POSTGRES_USER=ivan"
+      - "POSTGRES_PASSWORD=codlr"
+      - "POSTGRES_DB=imager"
+  imager-redis:
+    image: redis:3.0.7
